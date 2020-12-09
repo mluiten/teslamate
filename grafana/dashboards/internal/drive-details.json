@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1601722850623,
+  "iteration": 1607507903288,
   "links": [
     {
       "icon": "dashboard",
@@ -79,7 +79,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -108,7 +108,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n\t$__time(date),\n\tconvert_km(speed::numeric, '$length_unit') AS \"Speed [$length_unit/h]\",\n\tpower AS \"Power [kW]\",\n\tconvert_km([[preferred_range]]_battery_range_km, '$length_unit') AS \"Range ($preferred_range) [$length_unit]\",\n\tconvert_km(est_battery_range_km, '$length_unit') AS \"Range (est.) [$length_unit]\",\n\tbattery_level AS \"SOC [%]\",\n\tusable_battery_level AS \"usable SOC [%]\"\nFROM\n\tpositions\nWHERE\n car_id = $car_id AND\n $__timeFilter(date)\nORDER BY\n\tdate ASC",
+          "rawSql": "SELECT\n\t$__time(date),\n\tavg(convert_km(speed::numeric, '$length_unit')) OVER (ORDER BY date ROWS BETWEEN 10 PRECEDING AND CURRENT ROW) AS \"Speed [$length_unit/h]\",\n\tavg(power) OVER (ORDER BY date ROWS BETWEEN 10 PRECEDING AND CURRENT ROW) AS \"Power [kW]\",\n\tconvert_km([[preferred_range]]_battery_range_km, '$length_unit') AS \"Range ($preferred_range) [$length_unit]\",\n\tconvert_km(est_battery_range_km, '$length_unit') AS \"Range (est.) [$length_unit]\",\n\tbattery_level AS \"SOC [%]\",\n\tusable_battery_level AS \"usable SOC [%]\"\nFROM\n\tpositions\nWHERE\n car_id = $car_id AND\n $__timeFilter(date)\nORDER BY\n\tdate ASC",
           "refId": "A",
           "select": [
             [
@@ -142,6 +142,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transformations": [],
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -256,7 +257,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "format": "table",
@@ -349,7 +350,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "format": "table",
@@ -440,7 +441,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "format": "table",
@@ -549,7 +550,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "format": "table",
@@ -724,7 +725,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -848,7 +849,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1015,7 +1016,7 @@
         },
         "textMode": "value_and_name"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "format": "table",
@@ -1062,8 +1063,8 @@
       {
         "current": {
           "selected": false,
-          "text": "NULL",
-          "value": "NULL"
+          "text": "11",
+          "value": "11"
         },
         "hide": 2,
         "label": null,
@@ -1075,13 +1076,14 @@
             "value": "NULL"
           }
         ],
-        "query": "NULL",
+        "query": "11",
         "skipUrlSync": false,
         "type": "textbox"
       },
       {
         "allValue": null,
         "current": {
+          "selected": false,
           "text": "C",
           "value": "C"
         },
@@ -1134,7 +1136,7 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "1",
+          "text": "Sonic",
           "value": "1"
         },
         "datasource": "TeslaMate",
@@ -1186,8 +1188,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "ideal",
-          "value": "ideal"
+          "text": "rated",
+          "value": "rated"
         },
         "datasource": "TeslaMate",
         "definition": "select preferred_range from settings limit 1;",
@@ -1212,8 +1214,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "http://localhost:4000",
-          "value": "http://localhost:4000"
+          "text": "http://192.168.1.5:4000",
+          "value": "http://192.168.1.5:4000"
         },
         "datasource": "TeslaMate",
         "definition": "select base_url from settings limit 1;",
@@ -1237,8 +1239,8 @@
     ]
   },
   "time": {
-    "from": "now-12h",
-    "to": "now"
+    "from": "2020-12-09T07:40:15.922Z",
+    "to": "2020-12-09T07:50:15.721Z"
   },
   "timepicker": {
     "refresh_intervals": [
